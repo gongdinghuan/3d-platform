@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D 模型展示平台</title>
+  <link rel="stylesheet" href="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Widgets/widgets.css">
+  <script src="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Cesium.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="cesiumContainer"></div>
+
+  <div id="viewerModal" class="modal hidden">
+    <div class="modal-header">
+      <span id="modalTitle"></span>
+      <button id="modalClose">&times;</button>
+    </div>
+    <iframe id="viewerFrame" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="viewer.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+# 模型数据（托管在 Cloudflare R2）
+Production_*/
+
+# Claude Code
+.claude/
+docs/
