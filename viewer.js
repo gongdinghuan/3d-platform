@@ -12,7 +12,7 @@ const viewer = new Cesium.Viewer("cesiumContainer", {
 });
 
 // 计算所有模型的包围矩形，让初始视图展示所有标记
-viewer.ready.then(function () {
+viewer.readyPromise.then(function () {
   const lats = MODELS.map(m => m.lat);
   const lons = MODELS.map(m => m.lon);
   const pad = 1.5;
