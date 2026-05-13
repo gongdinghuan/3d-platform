@@ -1,7 +1,6 @@
 const CESIUM_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0N2E0ZGJjZi1kZGFkLTQ4MDAtYTgwMC05YmIxYTA2OWE1NzQiLCJpZCI6MTQyOTc1LCJpYXQiOjE2ODU0OTgwOTJ9.eG0QsVSO7AHQxKs2_pKFt_5_i1AvuPZios4fdRBQ8JU";
 
-// TODO: 部署 R2 后将此处替换为你的 R2 公开桶地址
-const R2_BASE_URL = "https://pub-xxxxxxxx.r2.dev";
+const R2_BASE_URL = "https://pub-d0b496ca79754e69acb6cbba15ca6f23.r2.dev";
 
 const MODELS = [
   { name: "1jmg",  dir: "Production_1jmg",  lat: 29.299,   lon: 120.09118 },
