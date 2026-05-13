@@ -42,7 +42,10 @@ MODELS.forEach((model) => {
       pixelOffset: new Cesium.Cartesian2(0, 8),
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
     },
-    model: model,
+    properties: {
+      productionName: model.name,
+      productionDir: model.dir,
+    },
   });
 });
 
@@ -50,8 +53,12 @@ MODELS.forEach((model) => {
 const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
 handler.setInputAction((click) => {
   const picked = viewer.scene.pick(click.position);
-  if (Cesium.defined(picked) && picked.id && picked.id.model) {
-    openViewer(picked.id.model);
+  if (Cesium.defined(picked) && picked.id && picked.id.properties) {
+    const props = picked.id.properties;
+    const dir = props.productionDir && props.productionDir.getValue ? props.productionDir.getValue() : null;
+    if (dir) {
+      openViewer(props.productionName.getValue ? props.productionName.getValue() : "", dir);
+    }
   }
 }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
@@ -61,9 +68,9 @@ const frame = document.getElementById("viewerFrame");
 const title = document.getElementById("modalTitle");
 const closeBtn = document.getElementById("modalClose");
 
-function openViewer(model) {
-  title.textContent = model.name;
-  frame.src = `${R2_BASE_URL}/${model.dir}/App/index.html`;
+function openViewer(name, dir) {
+  title.textContent = name;
+  frame.src = `${R2_BASE_URL}/${dir}/App/index.html`;
   modal.classList.remove("hidden");
 }
 
