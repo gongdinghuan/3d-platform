@@ -12,6 +12,5 @@ const MODELS = [
   { name: "东阳屏岩洞府", dir: "Production_pydf",  lat: 29.19554, lon: 120.30301 },
   { name: "义乌双林寺",   dir: "Production_SLS11", lat: 29.20985, lon: 120.05233 },
   { name: "南昌滕王阁",   dir: "Production_TWG22", lat: 28.68401, lon: 115.87559 },
-  { name: "金华万佛塔",   dir: "Production_wft",   lat: 29.10487, lon: 119.66409 },
   { name: "温州望海楼",   dir: "Production_wz",    lat: 27.84158, lon: 121.12708 },
 ];
