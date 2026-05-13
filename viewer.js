@@ -11,16 +11,19 @@ const viewer = new Cesium.Viewer("cesiumContainer", {
   fullscreenButton: false,
 });
 
-// Camera 飞到中国中部
-viewer.camera.flyTo({
-  destination: Cesium.Cartesian3.fromDegrees(119.5, 28.5, 600000),
-  orientation: {
-    heading: 0,
-    pitch: Cesium.Math.toRadians(-45),
-    roll: 0,
-  },
-  duration: 2,
-});
+// 计算所有模型的包围矩形，让初始视图展示所有标记
+(function flyToAllModels() {
+  const lats = MODELS.map(m => m.lat);
+  const lons = MODELS.map(m => m.lon);
+  const pad = 1.5;
+  const rect = Cesium.Rectangle.fromDegrees(
+    Math.min(...lons) - pad,
+    Math.min(...lats) - pad,
+    Math.max(...lons) + pad,
+    Math.max(...lats) + pad
+  );
+  viewer.camera.flyTo({ destination: rect, duration: 2 });
+})();
 
 // 添加标记
 MODELS.forEach((model) => {
@@ -67,12 +70,20 @@ const modal = document.getElementById("viewerModal");
 const frame = document.getElementById("viewerFrame");
 const title = document.getElementById("modalTitle");
 const closeBtn = document.getElementById("modalClose");
+const loadingEl = document.getElementById("loadingIndicator");
 
 function openViewer(name, dir) {
   title.textContent = name;
+  loadingEl.style.display = "flex";
+  frame.style.display = "none";
   frame.src = `${R2_BASE_URL}/${dir}/App/index.html`;
   modal.classList.remove("hidden");
 }
+
+frame.addEventListener("load", () => {
+  loadingEl.style.display = "none";
+  frame.style.display = "block";
+});
 
 closeBtn.addEventListener("click", closeViewer);
 modal.addEventListener("click", (e) => {
@@ -85,4 +96,6 @@ document.addEventListener("keydown", (e) => {
 function closeViewer() {
   modal.classList.add("hidden");
   frame.src = "";
+  loadingEl.style.display = "flex";
+  frame.style.display = "none";
 }
