@@ -12,7 +12,7 @@ const viewer = new Cesium.Viewer("cesiumContainer", {
 });
 
 // 计算所有模型的包围矩形，让初始视图展示所有标记
-(function flyToAllModels() {
+viewer.ready.then(function () {
   const lats = MODELS.map(m => m.lat);
   const lons = MODELS.map(m => m.lon);
   const pad = 1.5;
@@ -23,7 +23,7 @@ const viewer = new Cesium.Viewer("cesiumContainer", {
     Math.max(...lats) + pad
   );
   viewer.camera.flyTo({ destination: rect, duration: 2 });
-})();
+});
 
 // 添加标记
 MODELS.forEach((model) => {
