@@ -7,25 +7,9 @@
   <link rel="stylesheet" href="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Widgets/widgets.css">
   <script src="https://cesium.com/downloads/cesiumjs/releases/1.119/Build/Cesium/Cesium.js"></script>
   <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://pub-d0b496ca79754e69acb6cbba15ca6f23.r2.dev" crossorigin>
-  <link rel="dns-prefetch" href="https://pub-d0b496ca79754e69acb6cbba15ca6f23.r2.dev">
 </head>
 <body>
   <div id="cesiumContainer"></div>
-
-  <div id="viewerModal" class="modal hidden">
-    <div class="modal-header">
-      <span id="modalTitle"></span>
-      <button id="modalClose">&times;</button>
-    </div>
-    <div class="modal-body">
-      <div id="loadingIndicator" class="loading">
-        <div class="spinner"></div>
-        <p>加载模型中...</p>
-      </div>
-      <iframe id="viewerFrame" sandbox="allow-scripts allow-same-origin allow-popups"></iframe>
-    </div>
-  </div>
 
   <script src="config.js"></script>
   <script src="viewer.js"></script>

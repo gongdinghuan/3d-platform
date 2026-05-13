@@ -66,37 +66,6 @@ handler.setInputAction((click) => {
   }
 }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
-// Modal 逻辑
-const modal = document.getElementById("viewerModal");
-const frame = document.getElementById("viewerFrame");
-const title = document.getElementById("modalTitle");
-const closeBtn = document.getElementById("modalClose");
-const loadingEl = document.getElementById("loadingIndicator");
-
 function openViewer(name, dir) {
-  title.textContent = name;
-  loadingEl.style.display = "flex";
-  frame.style.display = "none";
-  frame.src = `${R2_BASE_URL}/${dir}/App/index.html`;
-  modal.classList.remove("hidden");
-}
-
-frame.addEventListener("load", () => {
-  loadingEl.style.display = "none";
-  frame.style.display = "block";
-});
-
-closeBtn.addEventListener("click", closeViewer);
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) closeViewer();
-});
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeViewer();
-});
-
-function closeViewer() {
-  modal.classList.add("hidden");
-  frame.src = "";
-  loadingEl.style.display = "flex";
-  frame.style.display = "none";
+  window.open(`${R2_BASE_URL}/${dir}/App/index.html`, "_blank");
 }
