@@ -5,3 +5,41 @@ html, body { width: 100%; height: 100%; overflow: hidden; }
   width: 100%;
   height: 100%;
 }
+
+#loading {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 99999;
+  background: #0a0e1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  color: #8ec8e8;
+  font-family: 'PingFang SC', 'Microsoft YaHei', -apple-system, sans-serif;
+  font-size: 15px;
+  transition: opacity 0.8s ease;
+}
+
+#loading.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#loading p {
+  letter-spacing: 4px;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 2px solid rgba(0, 212, 255, 0.15);
+  border-top-color: #00d4ff;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

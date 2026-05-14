@@ -11,25 +11,11 @@ const viewer = new Cesium.Viewer("cesiumContainer", {
   fullscreenButton: false,
 });
 
-viewer.scene.postRender.addEventListener(function flyToBounds() {
-  viewer.scene.postRender.removeEventListener(flyToBounds);
-  const lats = MODELS.map(m => m.lat);
-  const lons = MODELS.map(m => m.lon);
-  const pad = 1.5;
-  const rect = Cesium.Rectangle.fromDegrees(
-    Math.min(...lons) - pad,
-    Math.min(...lats) - pad,
-    Math.max(...lons) + pad,
-    Math.max(...lats) + pad
-  );
-  viewer.camera.flyTo({ destination: rect, duration: 2 });
-});
-
 function makeLabelSvg(name) {
   const fontSize = 15;
   const paddingX = 18;
   const paddingY = 10;
-  const textLen = name.length * fontSize * 0.75;
+  const textLen = name.length * fontSize;
   const w = textLen + paddingX * 2;
   const h = fontSize + paddingY * 2;
 
@@ -55,11 +41,10 @@ function makeLabelSvg(name) {
 }
 
 MODELS.forEach((model) => {
-  const svg = makeLabelSvg(model.name);
   viewer.entities.add({
     position: Cesium.Cartesian3.fromDegrees(model.lon, model.lat),
     billboard: {
-      image: svg,
+      image: makeLabelSvg(model.name),
       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       heightReference: Cesium.HeightReference.CLAMP_TO_GROUND,
       disableDepthTestDistance: Number.POSITIVE_INFINITY,
@@ -84,5 +69,39 @@ handler.setInputAction((click) => {
 }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
 
 function openViewer(name, dir) {
-  window.open(`${R2_BASE_URL}/${dir}/App/index.html`, "_blank");
+  const url = `${R2_BASE_URL}/${dir}/App/index.html`;
+  const win = window.open(url, "_blank");
+  if (!win || win.closed) {
+    alert("浏览器阻止了弹窗，请允许本站弹出窗口后重试。");
+  }
+}
+
+// Wait for globe tiles to fully render, then hide loading and fly to China
+const loadingEl = document.getElementById("loading");
+let tilesStarted = false;
+let done = false;
+
+viewer.scene.globe.tileLoadProgressEvent.addEventListener(function (queueLength) {
+  if (queueLength > 0) tilesStarted = true;
+  if (tilesStarted && queueLength === 0 && !done) {
+    done = true;
+    setTimeout(function () {
+      loadingEl.classList.add("fade-out");
+      setTimeout(function () { loadingEl.remove(); }, 800);
+      flyToChina();
+    }, 600);
+  }
+});
+
+function flyToChina() {
+  const lats = MODELS.map(m => m.lat);
+  const lons = MODELS.map(m => m.lon);
+  const pad = 1.5;
+  const rect = Cesium.Rectangle.fromDegrees(
+    Math.min(...lons) - pad,
+    Math.min(...lats) - pad,
+    Math.max(...lons) + pad,
+    Math.max(...lats) + pad
+  );
+  viewer.camera.flyTo({ destination: rect, duration: 2 });
 }
